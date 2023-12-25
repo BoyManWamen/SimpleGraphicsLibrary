@@ -73,10 +73,16 @@ cmake ../src/
 cmake --build . -j
 ```
 
-TGA files can be used as input for the executable in the obj directory.
+TGA files can be used as input for the executable in the obj directory. 
 
 ```sh
 ./simplegraphicslibrary ../obj/{object_name}/{object_name.obj}
+```
+
+You can create the obj directory doing a terminal command.
+
+```sh
+mkdir obj
 ```
 
 ## Version History
