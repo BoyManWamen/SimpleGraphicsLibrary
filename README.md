@@ -57,6 +57,12 @@ Make the build directory.
 mkdir build
 ```
 
+Change your directory to build.
+
+```sh
+cd build
+```
+
 You can create the executable with cmake.
 
 ```sh
@@ -81,5 +87,6 @@ TGA files can be used as input for the executable in the obj directory.
 ## Credits
 
 Dmitry V. Sokolov
+
 [tinyrenderer Repo](https://github.com/ssloy/tinyrenderer)
 
