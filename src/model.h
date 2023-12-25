@@ -4,11 +4,11 @@
 #include "tgaimage.h"
 
 class Model {
-    std::vector<vector3> vertices{};     // array of vertices
-    std::vector<vector2> texture_coords{}; // per-vertex array of tex coords
-    std::vector<vector3> normals{};     // per-vertex array of normal vectors
+    std::vector<vector3> vertices{};
+    std::vector<vector2> texture_coords{};
+    std::vector<vector3> normals{};
     std::vector<int> face_vertices{};
-    std::vector<int> face_texture_coords{};  // per-triangle indices in the above arrays
+    std::vector<int> face_texture_coords{};
     std::vector<int> face_normals{};
     TGAImage diffusemap{};         // diffuse color texture
     TGAImage normalmap{};          // normal map texture

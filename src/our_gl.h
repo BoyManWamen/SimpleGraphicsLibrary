@@ -2,7 +2,7 @@
 #include "geometry.h"
 
 void viewport(const int x, const int y, const int w, const int h);
-void projection(const double coeff=0); // coeff = -1/c
+void projection(const double coeff=0);
 void lookat(const vector3 eye, const vector3 center, const vector3 up);
 
 struct IShader {

@@ -113,7 +113,7 @@ bool TGAImage::write_tga_file(const std::string filename, const bool vflip, cons
     header.width  = w;
     header.height = h;
     header.datatypecode = (bpp==GRAYSCALE?(rle?11:3):(rle?10:2));
-    header.imagedescriptor = vflip ? 0x00 : 0x20; // top-left or bottom-left origin
+    header.imagedescriptor = vflip ? 0x00 : 0x20;
     out.write(reinterpret_cast<const char *>(&header), sizeof(header));
     if (!out.good()) {
         std::cerr << "can't dump the tga file\n";
@@ -147,7 +147,6 @@ bool TGAImage::write_tga_file(const std::string filename, const bool vflip, cons
     return true;
 }
 
-// TODO: it is not necessary to break a raw chunk for two equal pixels (for the matter of the resulting size)
 bool TGAImage::unload_rle_data(std::ofstream &out) const {
     const std::uint8_t max_chunk_length = 128;
     size_t npixels = w*h;

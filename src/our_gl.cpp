@@ -8,11 +8,11 @@ void viewport(const int x, const int y, const int w, const int h) {
     Viewport = {{{w/2., 0, 0, x+w/2.}, {0, h/2., 0, y+h/2.}, {0,0,1,0}, {0,0,0,1}}};
 }
 
-void projection(const double f) { // check https://en.wikipedia.org/wiki/Camera_matrix
+void projection(const double f) {
     Projection = {{{1,0,0,0}, {0,-1,0,0}, {0,0,1,0}, {0,0,-1/f,0}}};
 }
 
-void lookat(const vector3 eye, const vector3 center, const vector3 up) { // check https://github.com/ssloy/tinyrenderer/wiki/Lesson-5-Moving-the-camera
+void lookat(const vector3 eye, const vector3 center, const vector3 up) {
     vector3 z = (center-eye).normalized();
     vector3 x =  (cross(up,z)).normalized();
     vector3 y =  cross(z, x).normalized();
@@ -23,13 +23,13 @@ void lookat(const vector3 eye, const vector3 center, const vector3 up) { // chec
 
 vector3 barycentric(const vector2 tri[3], const vector2 P) {
     matrix<3,3> ABC = {{embed<3>(tri[0]), embed<3>(tri[1]), embed<3>(tri[2])}};
-    if (ABC.det()<1e-3) return {-1,1,1}; // for a degenerate triangle generate negative coordinates, it will be thrown away by the rasterizator
+    if (ABC.det()<1e-3) return {-1,1,1};
     return ABC.invert_transpose() * embed<3>(P);
 }
 
 void triangle(const vector4 clip_verts[3], IShader &shader, TGAImage &image, std::vector<double> &zbuffer) {
-    vector4 pts[3]  = { Viewport*clip_verts[0],    Viewport*clip_verts[1],    Viewport*clip_verts[2]    };  // triangle screen coordinates before persp. division
-    vector2 pts2[3] = { proj<2>(pts[0]/pts[0][3]), proj<2>(pts[1]/pts[1][3]), proj<2>(pts[2]/pts[2][3]) };  // triangle screen coordinates after  perps. division
+    vector4 pts[3]  = { Viewport*clip_verts[0],    Viewport*clip_verts[1],    Viewport*clip_verts[2]    };
+    vector2 pts2[3] = { proj<2>(pts[0]/pts[0][3]), proj<2>(pts[1]/pts[1][3]), proj<2>(pts[2]/pts[2][3]) };
 
     int bboxmin[2] = {image.width()-1, image.height()-1};
     int bboxmax[2] = {0, 0};
@@ -43,11 +43,11 @@ void triangle(const vector4 clip_verts[3], IShader &shader, TGAImage &image, std
         for (int y=std::max(bboxmin[1], 0); y<=std::min(bboxmax[1], image.height()-1); y++) {
             vector3 bc_screen = barycentric(pts2, {static_cast<double>(x), static_cast<double>(y)});
             vector3 bc_clip   = {bc_screen.x/pts[0][3], bc_screen.y/pts[1][3], bc_screen.z/pts[2][3]};
-            bc_clip = bc_clip/(bc_clip.x+bc_clip.y+bc_clip.z); // check https://github.com/ssloy/tinyrenderer/wiki/Technical-difficulties-linear-interpolation-with-perspective-deformations
+            bc_clip = bc_clip/(bc_clip.x+bc_clip.y+bc_clip.z);
             double frag_depth = vector3{clip_verts[0][2], clip_verts[1][2], clip_verts[2][2]}*bc_clip;
             if (bc_screen.x<0 || bc_screen.y<0 || bc_screen.z<0 || frag_depth > zbuffer[x+y*image.width()]) continue;
             TGAColor color;
-            if (shader.fragment(bc_clip, color)) continue; // fragment shader can discard current fragment
+            if (shader.fragment(bc_clip, color)) continue;
             zbuffer[x+y*image.width()] = frag_depth;
             image.set(x, y, color);
         }
