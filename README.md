@@ -21,7 +21,7 @@
 
 ## Description
 
-This repository is a curated collection of my solutions to various LeetCode problems, implemented in C++. Whether you're a programming enthusiast, a student preparing for coding interviews, or a seasoned developer looking for efficient problem-solving techniques, you'll find a wealth of C++ solutions here.
+Embark on an exciting journey into the realm of 3D graphics with SimpleGraphicsLibrary, a project designed for aspiring programmers eager to explore the fundamentals of computer graphics using C++. This OpenGL-inspired endeavor is perfect for amateurs seeking hands-on experience in rendering simple 3D scenes.
 
 ## Getting Started
 
