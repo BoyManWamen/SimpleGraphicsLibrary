@@ -17,6 +17,7 @@
 * [Description](#description)
 * [Installing](#installing)
 * [Version History](#version-history)
+* [Credits](#credits)
 
 ## Description
 
@@ -76,3 +77,9 @@ TGA files can be used as input for the executable in the obj directory.
 
 * 1.0.0
     * Initial Release
+
+## Credits
+
+Dmitry V. Sokolov
+[tinyrenderer Repo](https://github.com/ssloy/tinyrenderer)
+
