@@ -2,25 +2,25 @@
 #include "model.h"
 #include "our_gl.h"
 
-constexpr int outputWidth  = 800; // output image size
+constexpr int outputWidth  = 800;
 constexpr int outputHeight = 800;
-constexpr vector3 lightDirection{1,1,1}; // light source
-constexpr vector3 cameraPosition{1,1,3}; // camera position
-constexpr vector3 cameraDirection{0,0,0}; // camera direction
-constexpr vector3 cameraUp{0,1,0}; // camera up vector
+constexpr vector3 lightDirection{1,1,1};
+constexpr vector3 cameraPosition{1,1,3};
+constexpr vector3 cameraDirection{0,0,0};
+constexpr vector3 cameraUp{0,1,0};
 
-extern matrix<4,4> ModelView; // "OpenGL" state matrices
+extern matrix<4,4> ModelView;
 extern matrix<4,4> Projection;
 
 struct CustomShader : IShader {
     const Model &customModel;
-    vector3 uniformLightDirection;       // light direction in view coordinates
-    matrix<2,3> varyingUV;  // triangle uv coordinates, written by the vertex shader, read by the fragment shader
-    matrix<3,3> varyingNormal; // normal per vertex to be interpolated by FS
-    matrix<3,3> viewTriangle;    // triangle in view coordinates
+    vector3 uniformLightDirection;
+    matrix<2,3> varyingUV;
+    matrix<3,3> varyingNormal;
+    matrix<3,3> viewTriangle;
 
     CustomShader(const Model &m) : customModel(m) {
-        uniformLightDirection = proj<3>((ModelView*embed<4>(lightDirection, 0.))).normalized(); // transform the light vector to view coordinates
+        uniformLightDirection = proj<3>((ModelView*embed<4>(lightDirection, 0.))).normalized();
     }
 
     virtual void vertex(const int iface, const int nthvert, vector4& gl_Position) {
@@ -32,20 +32,18 @@ struct CustomShader : IShader {
     }
 
     virtual bool fragment(const vector3 bar, TGAColor &gl_FragColor) {
-        vector3 bn = (varyingNormal*bar).normalized(); // per-vertex normal interpolation
-        vector2 uv = varyingUV*bar; // tex coord interpolation
+        vector3 bn = (varyingNormal*bar).normalized();
+        vector2 uv = varyingUV*bar;
 
-        // for the math refer to the tangent space normal mapping lecture
-        // https://github.com/ssloy/tinyrenderer/wiki/Lesson-6bis-tangent-space-normal-mapping
         matrix<3,3> AI = matrix<3,3>{ {viewTriangle.col(1) - viewTriangle.col(0), viewTriangle.col(2) - viewTriangle.col(0), bn} }.invert();
         vector3 i = AI * vector3{varyingUV[0][1] - varyingUV[0][0], varyingUV[0][2] - varyingUV[0][0], 0};
         vector3 j = AI * vector3{varyingUV[1][1] - varyingUV[1][0], varyingUV[1][2] - varyingUV[1][0], 0};
         matrix<3,3> B = matrix<3,3>{ {i.normalized(), j.normalized(), bn} }.transpose();
 
-        vector3 n = (B * customModel.get_normal(uv)).normalized(); // transform the normal from the texture to the tangent space
-        double diff = std::max(0., n*uniformLightDirection); // diffuse light intensity
-        vector3 r = (n*(n*uniformLightDirection)*2 - uniformLightDirection).normalized(); // reflected light direction, specular mapping is described here: https://github.com/ssloy/tinyrenderer/wiki/Lesson-6-Shaders-for-the-software-renderer
-        double spec = std::pow(std::max(-r.z, 0.), 5+sample2D(customModel.specular(), uv)[0]); // specular intensity, note that the camera lies on the z-axis (in view), therefore simple -r.z
+        vector3 n = (B * customModel.get_normal(uv)).normalized();
+        double diff = std::max(0., n*uniformLightDirection);
+        vector3 r = (n*(n*uniformLightDirection)*2 - uniformLightDirection).normalized();
+        double spec = std::pow(std::max(-r.z, 0.), 5+sample2D(customModel.specular(), uv)[0]);
 
         TGAColor c = sample2D(customModel.diffuse(), uv);
         for (int i : {0,1,2})
