@@ -4,7 +4,7 @@
 
 <div align="center">
 
-<a href="https://github.com/BoyManWamen/SimpleGraphicsLibrary/stargazers">![GitHub Repo stars](https://img.shields.io/github/stars/BoyManWamen/SimpleGraphicsLibrary?style=social)</a>
+<a href="https://github.com/BoyManWamen/SimpleGraphicsLibrary/stargazers">![GitHub Repo stars](https://img.shields.io/github/stars/BoyManWamen/TrainingExercises?style=social)</a>
 <a href="https://github-com.translate.goog/BoyManWamen/SimpleGraphicsLibrary/blob/main/README.md?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp">![Translate](https://img.shields.io/badge/Translate-blue)</a>
 </div>
 
@@ -73,10 +73,16 @@ cmake ../src/
 cmake --build . -j
 ```
 
-TGA files can be used as input for the executable in the obj directory.
+TGA files can be used as input for the executable in the obj directory. 
 
 ```sh
 ./simplegraphicslibrary ../obj/{object_name}/{object_name.obj}
+```
+
+You can create the obj directory doing a terminal command.
+
+```sh
+mkdir obj
 ```
 
 ## Version History
