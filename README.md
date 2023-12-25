@@ -1,67 +1,78 @@
-# Tiny Renderer or how OpenGL works: software rendering in 500 lines of code
+<h1 align="center"> 
+   <span>Simple Graphics Library</span>
+</h1>
 
-# Check [the wiki](https://github.com/ssloy/tinyrenderer/wiki) for the detailed lessons.
+<div align="center">
 
-## compilation
+<a href="https://github.com/BoyManWamen/SimpleGraphicsLibrary/stargazers">![GitHub Repo stars](https://img.shields.io/github/stars/BoyManWamen/SimpleGraphicsLibrary?style=social)</a>
+<a href="https://github-com.translate.goog/BoyManWamen/SimpleGraphicsLibrary/blob/main/README.md?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp">![Translate](https://img.shields.io/badge/Translate-blue)</a>
+</div>
+
+<div align="center">
+<img src="https://i.imgur.com/Sm2jGxq.png"/>
+</div>
+
+## Table of Contents
+
+* [Description](#description)
+* [Installing](#installing)
+* [Version History](#version-history)
+
+## Description
+
+This repository is a curated collection of my solutions to various LeetCode problems, implemented in C++. Whether you're a programming enthusiast, a student preparing for coding interviews, or a seasoned developer looking for efficient problem-solving techniques, you'll find a wealth of C++ solutions here.
+
+## Getting Started
+
+### Installing
+
+Make sure to download cmake and ninja before compiling the program.
+
+[Cmake](https://cmake.org/download/)
+
+[Ninja](https://ninja-build.org/)
+
+First, navigate to the directory you want to have your project.
+
 ```sh
-git clone https://github.com/ssloy/tinyrenderer.git &&
-cd tinyrenderer &&
-mkdir build &&
-cd build &&
-cmake .. &&
-cmake --build . -j &&
-./tinyrenderer ../obj/diablo3_pose/diablo3_pose.obj ../obj/floor.obj
-```
-The rendered image is saved to `framebuffer.tga`.
-
-You can open the project in Gitpod, a free online dev evironment for GitHub:
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ssloy/tinyrenderer)
-
-On open, the editor will compile & run the program as well as open the resulting image in the editor's preview.
-Just change the code in the editor and rerun the script (use the terminal's history) to see updated images.
-
-## The main idea
-
-**My source code is irrelevant. Read the wiki and implement your own renderer. Only when you suffer through all the tiny details you will learn what is going on.**
-
-In [this series of articles](https://github.com/ssloy/tinyrenderer/wiki), I want to show the way OpenGL works by writing its clone (a much simplified one). Surprisingly enough, I often meet people who cannot overcome the initial hurdle of learning OpenGL / DirectX. Thus, I have prepared a short series of lectures, after which my students show quite good renderers.
-
-So, the task is formulated as follows: using no third-party libraries (especially graphic ones), get something like this picture:
-
-![](https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/00-home/africanhead.png)
-
-_Warning: this is a training material that will loosely repeat the structure of the OpenGL library. It will be a software renderer. **I do not want to show how to write applications for OpenGL. I want to show how OpenGL works.** I am deeply convinced that it is impossible to write efficient applications using 3D libraries without understanding this._
-
-I will try to make the final code about 500 lines. My students need 10 to 20 programming hours to begin making such renderers. At the input, we get a test file with a polygonal wire + pictures with textures. At the output, we’ll get a rendered model. No graphical interface, the program simply generates an image.
-
-
-Since the goal is to minimize external dependencies, I give my students just one class that allows working with [TGA](http://en.wikipedia.org/wiki/Truevision_TGA) files. It’s one of the simplest formats that supports images in RGB/RGBA/black and white formats. So, as a starting point, we’ll obtain a simple way to work with pictures. You should note that the only functionality available at the very beginning (in addition to loading and saving images) is the capability to set the color of one pixel.
-
-There are no functions for drawing line segments and triangles. We’ll have to do all of this by hand. I provide my source code that I write in parallel with students. But I would not recommend using it, as this doesn’t make sense. The entire code is available on github, and [here](https://github.com/ssloy/tinyrenderer/tree/909fe20934ba5334144d2c748805690a1fa4c89f) you will find the source code I give to my students.
-
-```C++
-#include "tgaimage.h"
-const TGAColor white = TGAColor(255, 255, 255, 255);
-const TGAColor red   = TGAColor(255, 0,   0,   255);
-int main(int argc, char** argv) {
-        TGAImage image(100, 100, TGAImage::RGB);
-        image.set(52, 41, red);
-        image.write_tga_file("output.tga");`
-        return 0;
-}
+cd path/to/your/directory
 ```
 
-output.tga should look something like this:
+Next, clone the repository.
 
-![](https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/00-home/reddot.png)
+```sh
+git clone https://github.com/BoyManWamen/SimpleGraphicsLibrary.git
+```
 
+Once you have cloned the repository, you can now move into the project directory.
 
-# Teaser: few examples made with the renderer
+```sh
+cd SimpleGraphicsLibrary
+```
 
-![](https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/00-home/demon.png)
+Make the build directory.
 
-![](https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/00-home/diablo-glow.png)
+```sh
+mkdir build
+```
 
-![](https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/00-home/boggie.png) 
+You can create the executable with cmake.
 
-![](https://raw.githubusercontent.com/ssloy/tinyrenderer/gh-pages/img/00-home/diablo-ssao.png)
+```sh
+cmake ../src/
+```
+
+```sh
+cmake --build . -j
+```
+
+TGA files can be used as input for the executable in the obj directory.
+
+```sh
+./simplegraphicslibrary ../obj/{object_name}/{object_name.obj}
+```
+
+## Version History
+
+* 1.0.0
+    * Initial Release
