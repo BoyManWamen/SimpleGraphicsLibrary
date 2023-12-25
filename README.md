@@ -4,7 +4,7 @@
 
 <div align="center">
 
-<a href="https://github.com/BoyManWamen/SimpleGraphicsLibrary/stargazers">![GitHub Repo stars](https://img.shields.io/github/stars/BoyManWamen/SimpleGraphicsLibrary?style=social)</a>
+<a href="https://github.com/BoyManWamen/SimpleGraphicsLibrary/stargazers">![GitHub Repo stars](https://img.shields.io/github/stars/BoyManWamen/TrainingExercises?style=social)</a>
 <a href="https://github-com.translate.goog/BoyManWamen/SimpleGraphicsLibrary/blob/main/README.md?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp">![Translate](https://img.shields.io/badge/Translate-blue)</a>
 </div>
 
